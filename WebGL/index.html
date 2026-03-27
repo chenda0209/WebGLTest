@@ -22,12 +22,13 @@
     <div id="unity-warning"> </div>
   </div>
   <script>
+    window.unityInstance = null;
     window.addEventListener("load", function () {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("ServiceWorker.js");
       }
     });
-    
+
     window.addEventListener('message', function (e) {
       if (!e.data || !window.unityInstance) return;
 
@@ -109,6 +110,7 @@
       createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
       }).then((unityInstance) => {
+        window.unityInstance = unityInstance;
         loadingBar.style.display = "none";
       }).catch((message) => {
         alert(message);
